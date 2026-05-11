@@ -46,6 +46,57 @@ Skill 会指导 Agent：
 - 当前 Agent 环境可调用 Stata MCP；
 - 要查询的 Stata 命令或包已安装在本机 Stata 环境中。
 
+## 安装方法
+
+### 方法一：直接克隆到 Claude commands 目录
+
+如果你的 Agent 会从 `~/.claude/commands/` 读取 Skill，可以直接运行：
+
+```bash
+git clone https://github.com/ashuiGordon/stata-help-skill.git ~/.claude/commands/stata-help
+```
+
+安装后目录结构应类似：
+
+```text
+~/.claude/commands/stata-help/
+├── README.md
+├── skill.md
+└── LICENSE
+```
+
+重启或刷新 Agent 后，当你询问 Stata 命令文档、语法、选项或示例时，Agent 就可以根据 `skill.md` 调用 Stata MCP 查询本机 help 文件。
+
+### 方法二：手动下载 skill.md
+
+如果你不想克隆整个仓库，也可以手动创建目录并下载 `skill.md`：
+
+```bash
+mkdir -p ~/.claude/commands/stata-help
+curl -L https://raw.githubusercontent.com/ashuiGordon/stata-help-skill/main/skill.md \
+  -o ~/.claude/commands/stata-help/skill.md
+```
+
+### 方法三：放入其他 Skill 搜索目录
+
+如果你的 IDE 或 Agent 使用其他 Skill 目录，请将本仓库中的 `skill.md` 放入对应目录，例如：
+
+```text
+<你的-skill-目录>/stata-help/skill.md
+```
+
+关键是保持 `stata-help` 目录下存在 `skill.md`，并确保 Agent 能扫描到该目录。
+
+### 验证安装
+
+安装完成后，可以向 Agent 提问：
+
+```text
+帮我查一下 oneclick 的 Stata 帮助文档
+```
+
+如果本机已安装 `oneclick` 且 Stata MCP 可用，Agent 应能找到 `oneclick.sthlp`，并将其转换为纯文本进行总结。
+
 ## 示例
 
 用户提问：
